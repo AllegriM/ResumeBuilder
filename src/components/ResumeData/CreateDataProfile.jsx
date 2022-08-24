@@ -1,13 +1,18 @@
-import { Button, FormControl, FormLabel, Heading, Input, Stack } from "@chakra-ui/react"
-import { useReducer } from "react";
-import { IoCameraOutline } from 'react-icons/io5'
+import { Button, FormControl, FormLabel, Heading, Img, Input, Stack } from "@chakra-ui/react"
+import { useEffect, useReducer, useState } from "react";
+import { MdCameraAlt } from 'react-icons/md'
 import { useDispatch, useSelector } from "react-redux";
-import { saveProfileData } from "../../features/profile/profileSlice";
+import { createProfileResumeData } from "../../features/resumeData/resumeDataSlice";
+import { IconContext } from "react-icons";
 
-function ChangeDataProfile({ setDisplay }) {
+function CreateDataProfile({ handleClose }) {
 
     const dispatch = useDispatch()
-    const selector = useSelector(state => state.profile)
+    const selector = useSelector(state => state.resumeData.Profile)
+
+    const [image, setImage] = useState(null)
+    const [preview, setPreview] = useState(null)
+
     const [profileData, setProfileData] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
         {
@@ -15,7 +20,8 @@ function ChangeDataProfile({ setDisplay }) {
             jobTitle: "",
             email: "",
             phone: "",
-            city: ""
+            city: "",
+            image: image
         }
     );
     const handleChangeName = (e) => {
@@ -24,20 +30,47 @@ function ChangeDataProfile({ setDisplay }) {
     }
 
     const handleSubmit = () => {
-        dispatch(saveProfileData(profileData))
+        dispatch(createProfileResumeData(profileData))
         console.log(selector)
     }
 
+    const handleImage = (e) => {
+        // console.log(e.target.files[0])
+        setImage(e.target.files[0])
+    }
+
+    useEffect(() => {
+        if (image) {
+            const reader = new FileReader()
+            reader.onloadend = (e) => {
+                setPreview({ image: e.target.result })
+            }
+            reader.readAsDataURL(image)
+        } else {
+            setPreview(null)
+        }
+    }, [image])
+
+    console.log(preview)
 
     return (
-        <Stack p={5} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' w='100%' align='center'>
+        <Stack p={5} maxW={620} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' w='100%' align='center'>
             <Heading>Edit Profile</Heading>
-            <FormControl display='flex' minW='200px' w='100%' justifyContent='center' alignItems='center'>
-                <Input w='100%' h='100%' type='file' id="input-file-upload" display='none' accept="image/png, image/jpg, image/gif, image/jpeg" />
-                <FormLabel htmlFor="input-file-upload" bg='gray.200' borderRadius='50%' w='200px' display='flex' justifyContent='center' alignItems='center' minH='200px' cursor='pointer'>
-                    <IoCameraOutline color='gray' size='5em' />
-                </FormLabel>
-            </FormControl>
+            <IconContext.Provider value={{ color:'gray', size:'5em'}}>
+                <FormControl display='flex' minW='200px' w='100%' justifyContent='center' alignItems='center'>
+                    <Input onChange={handleImage} w='100%' h='100%' type='file' id="input-file-upload" display='none' accept="image/png, image/jpg, image/gif, image/jpeg" />
+                    {
+                        preview ?
+                            <FormLabel display='flex' justifyContent='center' alignItems='center' borderRadius='50%' w='200px' minH='200px' cursor='pointer' overflow='hidden'>
+                                <Img h='200px' w='100%' objectFit='cover' src={preview.image} />
+                            </FormLabel>
+                            :
+                            <FormLabel htmlFor="input-file-upload" bg='gray.200' borderRadius='50%' w='200px' display='flex' justifyContent='center' alignItems='center' minH='200px' cursor='pointer'>
+                                <MdCameraAlt  />
+                            </FormLabel>
+                    }
+                </FormControl>
+            </IconContext.Provider>
             <FormControl onSubmit={handleSubmit}>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="name">Full name</FormLabel>
@@ -61,7 +94,7 @@ function ChangeDataProfile({ setDisplay }) {
                 </Stack>
                 <Stack direction='row' mt={7} justify='center'>
                     <Button
-                        onClick={() => setDisplay(true)}
+                        onClick={handleClose}
                         display='flex'
                         variant='unstyled'
                         borderRadius='9999px'
@@ -88,4 +121,4 @@ function ChangeDataProfile({ setDisplay }) {
     )
 }
 
-export default ChangeDataProfile
+export default CreateDataProfile

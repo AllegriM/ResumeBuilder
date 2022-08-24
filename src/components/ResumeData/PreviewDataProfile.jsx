@@ -1,10 +1,15 @@
 import { Heading, Stack, Text } from "@chakra-ui/react"
+import { IconContext } from "react-icons";
 import { FaRegUser } from 'react-icons/fa'
-import { HiOutlineMail, HiOutlinePhone } from 'react-icons/hi'
-function PreviewDataProfile({ setDisplay, isDisabled = true }) {
+import { MdOutlineEmail, MdOutlineLocalPhone, MdOutlineLocationOn } from 'react-icons/md'
+import { useSelector } from "react-redux"
+
+function PreviewDataProfile({ setDisplay }) {
+
+    const selector = useSelector(state => state.resumeData.Profile)
 
     const onEdit = () => {
-        setDisplay(false)
+        setDisplay("profile")
     }
 
     return (
@@ -14,29 +19,31 @@ function PreviewDataProfile({ setDisplay, isDisabled = true }) {
             w='100%'
             bg='white'
             boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'
-            maxW='680px'
+            maxW='620px'
             p={5}
             borderRadius={8}
-            color={isDisabled ? 'rgb(156 163 175)' : 'black'}
+            color={Object.keys(selector).length === 0 ? 'rgb(156 163 175)' : 'black'}
             justify='space-around'
             cursor='pointer'
-        >
-            <Stack p={4} borderRadius='50%' w='80px' bg='gray.100' align='center'>
-                <FaRegUser size='3em' />
-            </Stack>
-            <Heading mt={4} as='h4' size='md'>Your name</Heading>
-            <Stack direction='row' align='center'>
-                <HiOutlineMail size='1.5em' />
-                <Text>Email</Text>
-            </Stack>
-            <Stack direction='row' align='center'>
-                <HiOutlinePhone size='1.5em' />
-                <Text>Phone</Text>
-            </Stack>
-            <Stack direction='row' align='center'>
-                <HiOutlineMail size='1.5em' />
-                <Text>Address</Text>
-            </Stack>
+            >
+            <IconContext.Provider value={{size: "1.5em" }}>
+                <Stack p={4} borderRadius='50%' w='120px' h='120px' bg='gray.100' align='center' justify='center'>
+                    <FaRegUser size='3em' />
+                </Stack>
+                <Heading mt={4} as='h4' size='md'>{selector.fullName ? selector.fullName : "Your name"}</Heading>
+                <Stack direction='row' align='center'>
+                    <MdOutlineEmail />
+                    <Text>{selector.email ? selector.email : "Email"}</Text>
+                </Stack>
+                <Stack direction='row' align='center'>
+                    <MdOutlineLocalPhone />
+                    <Text>{selector.phone ? selector.phone : "Phone"}</Text>
+                </Stack>
+                <Stack direction='row' align='center'>
+                    <MdOutlineLocationOn />
+                    <Text>{selector.city ? selector.city : "Address"}</Text>
+                </Stack>
+            </IconContext.Provider>
         </Stack>
     )
 }

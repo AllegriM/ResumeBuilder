@@ -1,30 +1,98 @@
 import { Stack } from "@chakra-ui/react"
-import { useState } from "react"
-import ChangeDataProfile from "../components/ResumeData/ChangeDataProfile"
-// import PreviewDataGroupAccordion from "../components/ResumeData/PreviewData/PreviewDataGroupAccordion"
-// import PreviewDataAccordion from "../components/ResumeData/PreviewData/PreviewDataAccordion"
-import PreviewDataProfile from "../components/ResumeData/PreviewDataProfile"
+import React, { Suspense, useState } from "react"
+import FullResumeData from "../components/ResumeData/FullResumeData"
 import ResumeDataButton from "../components/ResumeData/ResumeDataButton"
-import ResumeMissingDataGroup from "../components/ResumeData/ResumeMissingDataGroup"
 
+const CreateDataEducationElement = React.lazy(() => import("../components/ResumeData/CreateDataEducation"));
+const CreateDataProfileElement = React.lazy(() => import("../components/ResumeData/CreateDataProfile"));
+const CreateDataWorkExperienceElement = React.lazy(() => import("../components/ResumeData/CreateDataWorkExperience"));  
+const CreateDataSkillsElement = React.lazy(() => import("../components/ResumeData/CreateDataSkills"));
+const CreateDataLanguageElement = React.lazy(() => import("../components/ResumeData/CreateDataLanguage"));
+const CreateDataCoursesElement = React.lazy(() => import("../components/ResumeData/CreateDataCourses"));
+const CreateDataProjectElement = React.lazy(() => import("../components/ResumeData/CreateDataProject"));
+const CreateDataCertificatesElement = React.lazy(() => import("../components/ResumeData/CreateDataCertificates"));
 
 function ResumeData() {
 
-    const [display, setDisplay] = useState(true)
+    const [sectionId, setSectionId] = useState(null)
+
+    const handleOption = (id) => {
+        setSectionId(id)
+    }
+    const handleClose = () => {
+        setSectionId(null)
+    }
 
     return (
-        <Stack justify='center' align='center' gap={7} px={6} py={5}>
+        <Stack justify='center' align='center' gap={7} px={[6, 6, 0]} py={5} w='100%'>
             {
-                display ?
-                    <>
-                        <PreviewDataProfile setDisplay={setDisplay} />
-                        {/* <PreviewDataGroupAccordion /> */}
-                        <ResumeMissingDataGroup />
-                        <ResumeDataButton />
-                    </>
-                    :
-                    <ChangeDataProfile setDisplay={setDisplay} />
+                
+                sectionId === "profile" && 
+                    (
+                        <Suspense fallback={<Stack>Loading</Stack>}>
+                            <CreateDataProfileElement handleClose={handleClose} /> 
+                        </Suspense>
+                    )
+                ||
+                sectionId === "education" && 
+                (
+                    <Suspense fallback={<Stack>Loading</Stack>}>
+                        <CreateDataEducationElement handleClose={handleClose} />
+                    </Suspense>
+                )                
+                ||
+                sectionId === "professionalExperience" && 
+                (
+                    <Suspense fallback={<Stack>Loading</Stack>}>
+                        <CreateDataWorkExperienceElement handleClose={handleClose} />
+                    </Suspense>
+                )
+                ||
+                sectionId === "skills" && 
+                (
+                    <Suspense fallback={<Stack>Loading</Stack>}>
+                        <CreateDataSkillsElement handleClose={handleClose} />
+                    </Suspense>
+                )
+                ||
+
+                sectionId === "language" && 
+                (
+                    <Suspense fallback={<Stack>Loading</Stack>}>
+                        <CreateDataLanguageElement handleClose={handleClose} />
+                    </Suspense>
+                )
+                ||
+                sectionId === "course" && 
+                (   
+                    <Suspense fallback={<Stack>Loading</Stack>}>
+                        <CreateDataCoursesElement handleClose={handleClose} />
+                    </Suspense>
+                )
+                ||
+                sectionId === 'projects' && 
+                (
+                    <Suspense fallback={<Stack>Loading</Stack>}>
+                        <CreateDataProjectElement handleClose={handleClose} />
+                    </Suspense>
+                )
+                ||  
+                sectionId === 'certificates' && 
+                (
+                    <Suspense fallback={<Stack>Loading</Stack>}>
+                        <CreateDataCertificatesElement handleClose={handleClose} />
+                    </Suspense>
+                )
             }
+            {
+                !sectionId && (
+                <>
+                    <FullResumeData  handleOption={handleOption}/>
+                    <ResumeDataButton handleOption={handleOption} />
+                </>
+                )
+            }
+            
         </Stack>
     )
 }
