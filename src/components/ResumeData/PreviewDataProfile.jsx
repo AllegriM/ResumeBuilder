@@ -21,8 +21,8 @@ function PreviewDataProfile({ setDisplay }) {
             boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'
             maxW='620px'
             p={5}
-            borderRadius={8}
-            color={Object.keys(selector).length === 0 ? 'rgb(156 163 175)' : 'black'}
+            borderRadius={20}
+            color={Object.entries(selector) === null ? 'rgb(156 163 175)' : 'black'}
             justify='space-around'
             cursor='pointer'
             >

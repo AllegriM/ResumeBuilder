@@ -25,8 +25,8 @@ function ResumeTitle() {
     return (
         <IconContext.Provider value={{ size: '1em' }}>
             <Stack direction='row' align='center'>
-                <Text fontSize={['1.25rem', '1rem', '1rem', '1rem']} fontWeight={700} textAlign='center' flexGrow={1}>New Resume</Text>
-                <FaRegEdit />
+                <Text fontSize={['1.25rem', '1rem', '1.5rem', '2rem']} fontWeight={700} textAlign='center' flexGrow={1}>New Resume</Text>
+                <FaRegEdit size='1.5em'/>
             </Stack>
         </IconContext.Provider>
     )
@@ -35,7 +35,7 @@ function ResumeTitle() {
 
 function NavBar() {
     return (
-        <Stack pos={['sticky', 'sticky', 'relative']} borderRadius={[0, 0, 8]} top={0} px={5} maxW='620px' w='100%' direction='row' py={0.5} bg='white' align='center' justify='space-around' gap={5} boxShadow='rgba(0, 0, 0, 0.15) 1.50px 1.50px 2.6px' >
+        <Stack pos={['sticky', 'sticky', 'relative']} borderRadius={[0, 0, 20]} top={0} px={5} maxW='620px' w='100%' direction='row' py={3} bg='white' align='center' justify='space-around' gap={5} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' >
             <ResumeTitle />
             <DownloadResume></DownloadResume>
         </Stack>

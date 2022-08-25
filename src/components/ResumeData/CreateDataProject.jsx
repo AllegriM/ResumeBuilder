@@ -1,44 +1,29 @@
 import { Button, FormControl, FormLabel, Heading, Input, Stack, Textarea } from "@chakra-ui/react"
-import { useReducer } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import createProjectsResumeData from "../../features/resumeData/resumeDataSlice";
+import { createProjectsResumeData } from "../../features/resumeData/resumeDataSlice";
+import { useSaveDataInfo } from "../../hooks/useSaveInfo";
+import ActionButtons from "../UI Components/ActionButtons";
 
 function CreateDataProject({ handleClose }) {
     const dispatch = useDispatch()
-    const selector = useSelector(state => state.Language)
-    const [languageData, setLanguageData] = useReducer(
-        (state, newState) => ({ ...state, ...newState }),
-        {
-            language: "",
-            info: "",
-            level: ""
-        }
-    );
-    const handleChangeName = (e) => {
-        const { name, value } = e.target;
-        setLanguageData({ [name]: value })
-    }
+    const selector = useSelector(state => state.resumeData.Projects)
 
-    const handleSubmit = () => {
-        dispatch(createProjectsResumeData(languageData))
-        console.log(selector)
-    }
-
+    const { handleSubmit, handleChangeName } = useSaveDataInfo({ selector, dispatch, handleClose, saveData: createProjectsResumeData })
 
     return (
-        <Stack key='Language' maxW={620} p={5} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' w='100%' align='center'>
+        <Stack key='Language' maxW={620} p={5} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' w='100%' align='center' bg='white'>
             <Heading>Create Project</Heading>
             <FormControl onSubmit={handleSubmit}>
                 <Stack m={4}>
-                    <FormLabel mb={0} htmlFor="project">Project title</FormLabel>
+                    <FormLabel mb={0} htmlFor="title">Project title</FormLabel>
                     <Stack direction='row' align='center'>
-                        <Input onChange={(e) => handleChangeName(e)} required variant='unstyled' bg='gray.200' p={2} type='text' name="project" id='project' placeholder='Enter course' />
+                        <Input onChange={(e) => handleChangeName(e)} required variant='unstyled' bg='gray.200' p={2} type='text' name="title" id='title' placeholder='Enter course' />
                         <Button bg='white' borderRadius={10}>Link</Button>
                     </Stack>
                 </Stack>
                 <Stack m={4}>
-                    <FormLabel mb={0} htmlFor="subtitle">Sub title</FormLabel>
-                    <Input onChange={(e) => handleChangeName(e)} required variant='unstyled' bg='gray.200' p={2} type='text' name="subtitle" id='subtitle' placeholder='Enter institution' />
+                    <FormLabel mb={0} htmlFor="info">Sub title</FormLabel>
+                    <Input onChange={(e) => handleChangeName(e)} required variant='unstyled' bg='gray.200' p={2} type='text' name="info" id='info' placeholder='Enter institution' />
                 </Stack>
                 <Stack m={4} direction='row' align='center'>
                     <Stack w='100%'>
@@ -61,30 +46,7 @@ function CreateDataProject({ handleClose }) {
                 <Stack m={4}>
                     <Textarea onChange={(e) => handleChangeName(e)} variant='unstyled' bg='gray.200' p={2} type='text' name="description" id='description' placeholder='Describe the project...' />
                 </Stack>
-                <Stack direction='row' mt={7} justify='center'>
-                    <Button
-                        onClick={handleClose}
-                        display='flex'
-                        variant='unstyled'
-                        borderRadius='9999px'
-                        border='1px solid black'
-                        p='1rem 2rem'
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        onClick={handleSubmit}
-                        type="submit"
-                        display='flex'
-                        bg='linear-gradient(90deg, rgba(199,63,255,1) 0%, rgba(255,38,82,1) 100%)'
-                        variant='unstyled'
-                        borderRadius='9999px'
-                        p='1rem 2rem'
-                    >
-                        Save
-                    </Button>
-                </Stack>
-
+                <ActionButtons handleClose={handleClose} handleSubmit={handleSubmit} />
             </FormControl >
         </Stack >
     )

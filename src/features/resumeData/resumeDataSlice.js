@@ -5,7 +5,7 @@ const initialState =
     "Profile": {},
     "Education": [],
     "WorkExperience": [],
-    "Skill": [],
+    "Skills": [],
     "Languages": [],
     "Projects": [],
     "Courses": [],
@@ -58,7 +58,7 @@ export const resumeDataSlice = createSlice({
             state.value += action.payload
         },
         createSkillResumeData: (state, action) => {
-            state.Skill.push(action.payload)
+            state.Skills.push(action.payload)
             // Redux Toolkit allows us to write "mutating" logic in reducers. It
             // doesn't actually mutate the state because it uses the Immer library,
             // which detects changes to a "draft state" and produces a brand new

@@ -1,9 +1,10 @@
-import { Button, FormControl, FormLabel, Heading, Img, Input, Stack } from "@chakra-ui/react"
+import { FormControl, FormLabel, Heading, Img, Input, Stack } from "@chakra-ui/react"
 import { useEffect, useReducer, useState } from "react";
 import { MdCameraAlt } from 'react-icons/md'
 import { useDispatch, useSelector } from "react-redux";
 import { createProfileResumeData } from "../../features/resumeData/resumeDataSlice";
 import { IconContext } from "react-icons";
+import ActionButtons from "../UI Components/ActionButtons";
 
 function CreateDataProfile({ handleClose }) {
 
@@ -13,7 +14,7 @@ function CreateDataProfile({ handleClose }) {
     const [image, setImage] = useState(null)
     const [preview, setPreview] = useState(null)
 
-    const [profileData, setProfileData] = useReducer(
+    const [data, setData] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
         {
             fullName: "",
@@ -21,17 +22,18 @@ function CreateDataProfile({ handleClose }) {
             email: "",
             phone: "",
             city: "",
-            image: image
+            image: ""
         }
     );
     const handleChangeName = (e) => {
         const { name, value } = e.target;
-        setProfileData({ [name]: value })
+        setData({ [name]: value })
     }
 
     const handleSubmit = () => {
-        dispatch(createProfileResumeData(profileData))
+        dispatch(createProfileResumeData(data))
         console.log(selector)
+        handleClose()
     }
 
     const handleImage = (e) => {
@@ -54,7 +56,7 @@ function CreateDataProfile({ handleClose }) {
     console.log(preview)
 
     return (
-        <Stack p={5} maxW={620} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' w='100%' align='center'>
+        <Stack p={5} maxW={620} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' w='100%' align='center' bg='white'>
             <Heading>Edit Profile</Heading>
             <IconContext.Provider value={{ color:'gray', size:'5em'}}>
                 <FormControl display='flex' minW='200px' w='100%' justifyContent='center' alignItems='center'>
@@ -92,30 +94,7 @@ function CreateDataProfile({ handleClose }) {
                     <FormLabel mb={0} htmlFor="city">City</FormLabel>
                     <Input onChange={(e) => handleChangeName(e)} variant='unstyled' bg='gray.200' p={2} type='phone' name="city" id='city' placeholder='Enter city, country' />
                 </Stack>
-                <Stack direction='row' mt={7} justify='center'>
-                    <Button
-                        onClick={handleClose}
-                        display='flex'
-                        variant='unstyled'
-                        borderRadius='9999px'
-                        border='1px solid black'
-                        p='1rem 2rem'
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        onClick={handleSubmit}
-                        type="submit"
-                        display='flex'
-                        bg='linear-gradient(90deg, rgba(199,63,255,1) 0%, rgba(255,38,82,1) 100%)'
-                        variant='unstyled'
-                        borderRadius='9999px'
-                        p='1rem 2rem'
-                    >
-                        Save
-                    </Button>
-                </Stack>
-
+                <ActionButtons handleClose={handleClose} handleSubmit={handleSubmit} />
             </FormControl >
         </Stack >
     )
