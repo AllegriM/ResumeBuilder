@@ -9,7 +9,7 @@ function PreviewDataProfile({ setDisplay }) {
     const selector = useSelector(state => state.resumeData.Profile)
 
     const onEdit = () => {
-        setDisplay("profile")
+        setDisplay("Profile")
     }
 
     return (

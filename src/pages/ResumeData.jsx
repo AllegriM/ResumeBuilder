@@ -12,9 +12,13 @@ const CreateDataCoursesElement = React.lazy(() => import("../components/ResumeDa
 const CreateDataProjectElement = React.lazy(() => import("../components/ResumeData/CreateDataProject"));
 const CreateDataCertificatesElement = React.lazy(() => import("../components/ResumeData/CreateDataCertificates"));
 
-function ResumeData() {
-
+function ResumeData() 
+{
     const [sectionId, setSectionId] = useState(null)
+    const [dataToEdit, setDataToEdit] = useState({title : "", description : "", 
+    image : "", city : "", 
+    country : "", info : "", 
+    startDate : "", endDate : ""})
 
     const handleOption = (id) => {
         setSectionId(id)
@@ -24,71 +28,70 @@ function ResumeData() {
     }
 
     return (
-        <Stack justify='center' align='center' gap={7} px={[6, 6, 0]} py={5} w='100%'>
+        <Stack justify='center' align='center' gap={7} px={[6, 6, 0]} py={5} w='100%' overflowY='hidden'>
             {
                 
-                sectionId === "profile" && 
+                sectionId === "Profile" && 
                     (
                         <Suspense fallback={<Stack>Loading</Stack>}>
-                            <CreateDataProfileElement handleClose={handleClose} /> 
+                            <CreateDataProfileElement data={dataToEdit} section={sectionId} handleClose={handleClose} /> 
                         </Suspense>
                     )
                 ||
-                sectionId === "education" && 
+                sectionId === "Education" && 
                 (
                     <Suspense fallback={<Stack>Loading</Stack>}>
-                        <CreateDataEducationElement handleClose={handleClose} />
+                        <CreateDataEducationElement data={dataToEdit} section={sectionId} handleClose={handleClose} />
                     </Suspense>
                 )                
                 ||
-                sectionId === "professionalExperience" && 
+                sectionId === "WorkExperience" && 
                 (
                     <Suspense fallback={<Stack>Loading</Stack>}>
-                        <CreateDataWorkExperienceElement handleClose={handleClose} />
+                        <CreateDataWorkExperienceElement data={dataToEdit} section={sectionId} handleClose={handleClose} />
                     </Suspense>
                 )
                 ||
-                sectionId === "skills" && 
+                sectionId === "Skills" && 
                 (
                     <Suspense fallback={<Stack>Loading</Stack>}>
-                        <CreateDataSkillsElement handleClose={handleClose} />
+                        <CreateDataSkillsElement data={dataToEdit} section={sectionId} handleClose={handleClose} />
                     </Suspense>
                 )
                 ||
-
-                sectionId === "language" && 
+                sectionId === "Language" && 
                 (
                     <Suspense fallback={<Stack>Loading</Stack>}>
-                        <CreateDataLanguageElement handleClose={handleClose} />
+                        <CreateDataLanguageElement data={dataToEdit} section={sectionId} handleClose={handleClose} />
                     </Suspense>
                 )
                 ||
-                sectionId === "course" && 
+                sectionId === "Course" && 
                 (   
                     <Suspense fallback={<Stack>Loading</Stack>}>
-                        <CreateDataCoursesElement handleClose={handleClose} />
+                        <CreateDataCoursesElement data={dataToEdit} section={sectionId} handleClose={handleClose} />
                     </Suspense>
                 )
                 ||
-                sectionId === 'projects' && 
+                sectionId === 'Projects' && 
                 (
                     <Suspense fallback={<Stack>Loading</Stack>}>
-                        <CreateDataProjectElement handleClose={handleClose} />
+                        <CreateDataProjectElement data={dataToEdit} section={sectionId} handleClose={handleClose} />
                     </Suspense>
                 )
                 ||  
-                sectionId === 'certificates' && 
+                sectionId === 'Certificates' && 
                 (
                     <Suspense fallback={<Stack>Loading</Stack>}>
-                        <CreateDataCertificatesElement handleClose={handleClose} />
+                        <CreateDataCertificatesElement data={dataToEdit} section={sectionId} handleClose={handleClose} />
                     </Suspense>
                 )
             }
             {
                 !sectionId && (
                 <>
-                    <FullResumeData  handleOption={handleOption}/>
-                    <ResumeDataButton handleOption={handleOption} />
+                    <FullResumeData  handleOption={handleOption} setDataToEdit={setDataToEdit} setSectionId={setSectionId} />
+                    <ResumeDataButton handleOption={handleOption} setDataToEdit={setDataToEdit} />
                 </>
                 )
             }

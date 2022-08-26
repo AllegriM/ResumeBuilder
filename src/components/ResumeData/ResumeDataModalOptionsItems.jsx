@@ -1,10 +1,13 @@
 import { Heading, Stack, Text } from "@chakra-ui/react"
 
-function ResumeDataModalOptionCard({ icon, title = '', description = '', id, handleOption, onClose }) {
+function ResumeDataModalOptionCard({ icon, title = '', description = '', id, handleOption, onClose, setDataToEdit }) {
 
     const handleCreateOption = (id) => {
-        console.log(id)
         handleOption(id)
+        setDataToEdit({title: "", description: "", 
+        image: "", city: "", 
+        country: "", info: "", 
+        startDate: "", endDate:""})
         onClose()
         window.scrollTo(0,0)
     }

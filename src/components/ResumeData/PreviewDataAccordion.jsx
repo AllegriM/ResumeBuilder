@@ -1,7 +1,12 @@
-import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Stack, Heading } from '@chakra-ui/react'
+import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Stack, Heading, Text } from '@chakra-ui/react'
 
-function PreviewDataAccordion({ title, data }) {
-    console.log(data)
+function PreviewDataAccordion({ title, data, setDataToEdit, setSectionId }) {
+
+    const handleEditAction = (item) => {
+        setDataToEdit(item)
+        setSectionId(title)
+    }
+
     return (
         <Accordion allowToggle variant='unstyled' w='100%' >
             <AccordionItem w='100%'>
@@ -11,12 +16,28 @@ function PreviewDataAccordion({ title, data }) {
                     </Stack>
                     <AccordionIcon />
                 </AccordionButton>
-                <AccordionPanel pb={4}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat.
-                </AccordionPanel>
+                {   
+                    data.length === 0 ? null :
+                    data.map(item => {
+
+                        return (
+                            <AccordionPanel key={item.id} p={2} bg='white' mt={2} onClick={() => handleEditAction(item)} cursor='pointer'>
+                                <Stack direction='row' align='center'>
+                                    <Text fontWeight={700}>{item.title}</Text>
+                                    <Text>{item.info ? `, ${item.info}` : null}</Text>
+                                </Stack>
+                                {
+                                    item.startDate && item.endDate ?
+                                    <Stack direction='row' align='center' gap={1}>
+                                        <Text >{item.startDate.replace('-', '/')} - {item.endDate.replace('-', '/')}</Text>
+                                    </Stack>
+                                    : null
+                                }
+                            </AccordionPanel>
+                        )
+                    })
+                }
+
             </AccordionItem>
         </Accordion>
     )

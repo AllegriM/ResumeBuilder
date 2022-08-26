@@ -1,27 +1,23 @@
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 
-export const useSaveDataInfo = ({selector, dispatch, handleClose, saveData}) => {
+export const useSaveDataInfo = ({selector, dispatch, handleClose, createSectionResumeData, section , data}) => {
 
-    const [image, setImage] = useState(null)
-    const [data, setData] = useReducer(
+    console.log(data)
+    const {title, info, city, image, country, startDate, endDate, description} = data;
+
+    const [newData, setData] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
         {
-            title: null,
-            info: null,
-            city: null,
-            country: null,
-            startDate: null,
-            endDate: null,
-            description: null,
-            image: null
+            title: title,
+            info: info,
+            city: city,
+            country: country,
+            startDate: startDate,
+            endDate: endDate,
+            description: description,
+            image: image
         }
     );
-
-    const handleImage = (e) => {
-        // console.log(e.target.files[0])
-        setImage(e.target.files[0])
-    }
-
 
     const handleChangeName = (e) => {
         const { name, value } = e.target;
@@ -29,10 +25,11 @@ export const useSaveDataInfo = ({selector, dispatch, handleClose, saveData}) => 
     }
 
     const handleSubmit = () => {
-        dispatch(saveData(data))
+        const id = `${newData.title + (+new Date())} `
+        dispatch(createSectionResumeData({data: {...newData, id}, section: section}))
         console.log(selector)
         handleClose()
     }
 
-    return {handleChangeName, handleSubmit, handleImage, image, data}
+    return {handleChangeName, handleSubmit, newData}
 }
