@@ -15,7 +15,7 @@ function CreateDataCertificates({handleClose, data, section}) {
 
     return (
         <Stack key='Language' p={5} maxW={620} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' w='100%' align='center' bg='white'>
-            <Heading>{!data ? "Create" : "Edit"} Certificate</Heading>
+            <Heading>{EMPTY_DATA ? "Create" : "Edit"} Certificate</Heading>
             <FormControl onSubmit={handleSubmit}>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="title">Certificate</FormLabel>
@@ -25,7 +25,7 @@ function CreateDataCertificates({handleClose, data, section}) {
                     <FormLabel mb={0} htmlFor="info">Additional Information</FormLabel>
                     <Input value={newData.info} onChange={(e) => handleChangeName(e)} required variant='unstyled' bg='gray.200' p={2} type='text' name="info" id='info' placeholder='e.g. level 1 and 2' />
                 </Stack>
-                <ActionButtons dataContent={EMPTY_DATA} section={section} handleClose={handleClose} handleSubmit={handleSubmit} />
+                <ActionButtons emptyData={EMPTY_DATA} section={section} oldData={data} newData={newData} handleClose={handleClose} handleSubmit={handleSubmit} />
             </FormControl >
         </Stack >
     )

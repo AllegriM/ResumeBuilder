@@ -14,7 +14,7 @@ function CreateDataLanguage({ handleClose, data, section }) {
 
     return (
         <Stack key='Language' maxW={620} p={5} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' w='100%' align='center' bg='white'>
-            <Heading>{!data ? "Create" : "Edit"} Languages</Heading>
+            <Heading>{EMPTY_DATA ? "Create" : "Edit"} Languages</Heading>
             <FormControl onSubmit={handleSubmit}>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="title">Language</FormLabel>
@@ -28,7 +28,7 @@ function CreateDataLanguage({ handleClose, data, section }) {
                     <FormLabel mb={0} htmlFor="subinfo">Language Level</FormLabel>
                     <Input value={newData.subinfo} onChange={(e) => handleChangeName(e)} variant='unstyled' bg='gray.200' p={2} type='text' name="subinfo" id='subinfo' placeholder='Enter level' />
                 </Stack>
-                <ActionButtons dataContent={EMPTY_DATA} section={section} handleClose={handleClose} handleSubmit={handleSubmit} />
+                <ActionButtons emptyData={EMPTY_DATA} section={section} oldData={data} newData={newData} handleClose={handleClose} handleSubmit={handleSubmit} />
             </FormControl >
         </Stack >
     )

@@ -1,20 +1,25 @@
 import { Button, Stack } from "@chakra-ui/react"
 import { useDispatch } from "react-redux"
-import { deleteSectionResumeData } from "../../features/resumeData/resumeDataSlice"
+import { deleteSectionResumeData, updateSectionResumeData } from "../../features/resumeData/resumeDataSlice"
 
-function ActionButtons({handleClose, handleSubmit, dataContent, data, section}) {
+function ActionButtons({handleClose, handleSubmit, emptyData, oldData, section, newData}) {
 
     const dispatch = useDispatch()
 
     const deleteData = () => {
-        dispatch(deleteSectionResumeData({section, data}))
+        dispatch(deleteSectionResumeData({section, oldData}))
+        handleClose()
+    }
+
+    const updateData = () => {
+        dispatch(updateSectionResumeData({section, oldData, newData}))
         handleClose()
     }
 
     return (
-        <Stack direction='row' mt={7} justify='space-between'>
+        <Stack direction='row' mt={7} justify={emptyData ?  'flex-end' : 'space-between'}>
             {
-                dataContent ? null :
+                emptyData ? null :
                 <Button onClick={deleteData} 
                 display='flex'
                 variant='unstyled'
@@ -31,7 +36,7 @@ function ActionButtons({handleClose, handleSubmit, dataContent, data, section}) 
                     Cancel
                 </Button>
                 <Button
-                    onClick={handleSubmit}
+                    onClick={emptyData ? handleSubmit : updateData}
                     fontWeight={600}
                     type="submit"
                     display='flex'

@@ -7,6 +7,7 @@ function PreviewDataAccordion({ title, data, setDataToEdit, setSectionId }) {
         setSectionId(title)
     }
 
+    console.log(data)
     return (
         <Accordion allowToggle variant='unstyled' w='100%' >
             <AccordionItem w='100%'>

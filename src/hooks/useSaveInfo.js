@@ -2,7 +2,6 @@ import { useReducer } from "react";
 
 export const useSaveDataInfo = ({selector, dispatch, handleClose, createSectionResumeData, section , data}) => {
 
-    console.log(data)
     const {title, info, city, image, country, startDate, endDate, description} = data;
 
     const [newData, setData] = useReducer(

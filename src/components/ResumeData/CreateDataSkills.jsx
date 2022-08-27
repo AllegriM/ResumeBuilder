@@ -14,7 +14,7 @@ function CreateDataSkills({ handleClose, data, section }) {
 
     return (
         <Stack p={5} maxW={620} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' w='100%' align='center' bg='white'>
-            <Heading>{!data ? "Create" : "Edit"} Skills</Heading>
+            <Heading>{EMPTY_DATA ? "Create" : "Edit"} Skills</Heading>
             <FormControl onSubmit={handleSubmit}>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="title">Skill</FormLabel>
@@ -34,7 +34,7 @@ function CreateDataSkills({ handleClose, data, section }) {
                         <option value='Expert'>Expert</option>
                     </Select>
                 </Stack>   
-                <ActionButtons dataContent={EMPTY_DATA} section={section} handleClose={handleClose} handleSubmit={handleSubmit} />
+                <ActionButtons emptyData={EMPTY_DATA} section={section} oldData={data} newData={newData} handleClose={handleClose} handleSubmit={handleSubmit} />
             </FormControl >
         </Stack >
     )

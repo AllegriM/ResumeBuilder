@@ -21,7 +21,7 @@ export const resumeDataSlice = createSlice({
         createProfileResumeData: (state, action) => {
             Object.assign(state.Profile, action.payload)
         },
-        editProfileResumeData: (state) => {
+        updateProfileResumeData: (state) => {
             state.value -= 1
         },
         deleteProfileResumeData: (state, action) => {
@@ -29,24 +29,25 @@ export const resumeDataSlice = createSlice({
         },
         createSectionResumeData: (state, action) => {
             const {section, data} = action.payload
-            console.log(state[section])
             const seccion  = state[section]
             seccion.push(data)
         },
-        editSectionResumeData: (state) => {
-            state.value -= 1
+        updateSectionResumeData: (state, action) => {
+            const {section, newData, oldData} = action.payload
+            const seccion  = state[section]
+            const dataIndex = seccion.findIndex(item => item.id === oldData.id)
+            console.log({oldData, newData, id: dataIndex})
+            Object.assign(seccion[dataIndex], ({...newData, id: oldData.id}))
         },
         deleteSectionResumeData: (state, action) => {
-            const {section, data} = action.payload
-            console.log(data)
+            const {section, oldData} = action.payload
             const seccion  = state[section]
-            seccion.splice(seccion.findIndex((item) => item.id === data.id, 1))
-            // seccion.slice(item => item.id === data.id, 1)
+            seccion.splice(seccion.findIndex((item) => item.id === oldData.id), 1);
         },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { createProfileResumeData, createSectionResumeData, deleteSectionResumeData } = resumeDataSlice.actions
+export const { createProfileResumeData, createSectionResumeData, deleteSectionResumeData, updateSectionResumeData } = resumeDataSlice.actions
 
 export default resumeDataSlice.reducer

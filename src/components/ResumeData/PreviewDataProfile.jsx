@@ -8,9 +8,11 @@ function PreviewDataProfile({ setDisplay }) {
 
     const selector = useSelector(state => state.resumeData.Profile)
 
+
     const onEdit = () => {
         setDisplay("Profile")
     }
+
 
     return (
         <Stack
@@ -22,7 +24,7 @@ function PreviewDataProfile({ setDisplay }) {
             maxW='620px'
             p={5}
             borderRadius={20}
-            color={Object.entries(selector) === null ? 'rgb(156 163 175)' : 'black'}
+            color='black'
             justify='space-around'
             cursor='pointer'
             >
@@ -30,18 +32,18 @@ function PreviewDataProfile({ setDisplay }) {
                 <Stack p={4} borderRadius='50%' w='120px' h='120px' bg='gray.100' align='center' justify='center'>
                     <FaRegUser size='3em' />
                 </Stack>
-                <Heading mt={4} as='h4' size='md'>{selector.fullName ? selector.fullName : "Your name"}</Heading>
+                <Heading mt={4} as='h4' size='md'>{selector?.fullName ? selector?.fullName : "Your name"}</Heading>
                 <Stack direction='row' align='center'>
                     <MdOutlineEmail />
-                    <Text>{selector.email ? selector.email : "Email"}</Text>
+                    <Text>{selector?.email ? selector?.email : "Email"}</Text>
                 </Stack>
                 <Stack direction='row' align='center'>
                     <MdOutlineLocalPhone />
-                    <Text>{selector.phone ? selector.phone : "Phone"}</Text>
+                    <Text>{selector?.phone ? selector?.phone : "Phone"}</Text>
                 </Stack>
                 <Stack direction='row' align='center'>
                     <MdOutlineLocationOn />
-                    <Text>{selector.city ? selector.city : "Address"}</Text>
+                    <Text>{selector?.city ? selector?.city : "Address"}</Text>
                 </Stack>
             </IconContext.Provider>
         </Stack>

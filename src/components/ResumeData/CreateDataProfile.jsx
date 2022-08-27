@@ -1,10 +1,9 @@
-import { FormControl, FormLabel, Heading, Img, Input, Stack } from "@chakra-ui/react"
+import { FormControl, FormLabel, Heading, Img, Input, Stack, Button } from "@chakra-ui/react"
 import { useEffect, useReducer, useState } from "react";
 import { MdCameraAlt } from 'react-icons/md'
 import { useDispatch, useSelector } from "react-redux";
 import { createProfileResumeData } from "../../features/resumeData/resumeDataSlice";
 import { IconContext } from "react-icons";
-import ActionButtons from "../UI Components/ActionButtons";
 
 function CreateDataProfile({ handleClose }) {
 
@@ -14,7 +13,7 @@ function CreateDataProfile({ handleClose }) {
     const [image, setImage] = useState(null)
     const [preview, setPreview] = useState(null)
 
-    const [data, setData] = useReducer(
+    const [newData, setData] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
         {
             fullName: "",
@@ -31,7 +30,7 @@ function CreateDataProfile({ handleClose }) {
     }
 
     const handleSubmit = () => {
-        dispatch(createProfileResumeData(data))
+        dispatch(createProfileResumeData(newData))
         console.log(selector)
         handleClose()
     }
@@ -76,25 +75,46 @@ function CreateDataProfile({ handleClose }) {
             <FormControl onSubmit={handleSubmit}>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="name">Full name</FormLabel>
-                    <Input onChange={(e) => handleChangeName(e)} required variant='unstyled' bg='gray.200' p={2} type='text' name="fullName" id='name' placeholder='Enter your title, first and last name' />
+                    <Input onChange={(e) => handleChangeName(e)} value={newData.fullName} required variant='unstyled' bg='gray.200' p={2} type='text' name="fullName" id='name' placeholder='Enter your title, first and last name' />
                 </Stack>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="jobTitle">Job Title</FormLabel>
-                    <Input onChange={(e) => handleChangeName(e)} required variant='unstyled' bg='gray.200' p={2} type='text' name="jobTitle" id='jobTitle' placeholder='Enter job title' />
+                    <Input onChange={(e) => handleChangeName(e)} value={newData.jobTitle} required variant='unstyled' bg='gray.200' p={2} type='text' name="jobTitle" id='jobTitle' placeholder='Enter job title' />
                 </Stack>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="email">Email</FormLabel>
-                    <Input onChange={(e) => handleChangeName(e)} variant='unstyled' bg='gray.200' p={2} type='email' name="email" id='email' placeholder='Enter email' />
+                    <Input onChange={(e) => handleChangeName(e)} value={newData.email} variant='unstyled' bg='gray.200' p={2} type='email' name="email" id='email' placeholder='Enter email' />
                 </Stack>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="phone">Phone</FormLabel>
-                    <Input onChange={(e) => handleChangeName(e)} variant='unstyled' bg='gray.200' p={2} type='phone' name="phone" id='phone' placeholder='Enter phone' />
+                    <Input onChange={(e) => handleChangeName(e)} value={newData.phone} variant='unstyled' bg='gray.200' p={2} type='phone' name="phone" id='phone' placeholder='Enter phone' />
                 </Stack>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="city">City</FormLabel>
-                    <Input onChange={(e) => handleChangeName(e)} variant='unstyled' bg='gray.200' p={2} type='phone' name="city" id='city' placeholder='Enter city, country' />
+                    <Input onChange={(e) => handleChangeName(e)} value={newData.city} variant='unstyled' bg='gray.200' p={2} type='phone' name="city" id='city' placeholder='Enter city, country' />
                 </Stack>
-                <ActionButtons handleClose={handleClose} handleSubmit={handleSubmit} />
+                <Stack direction='row' mt={7} justify='flex-end'>
+                    <Stack direction='row' gap={5}>
+                        <Button
+                            onClick={handleClose}
+                            variant='unstyled'
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={handleSubmit}
+                            fontWeight={600}
+                            type="submit"
+                            display='flex'
+                            bg='linear-gradient(90deg, rgba(199,63,255,1) 0%, rgba(255,38,82,1) 100%)'
+                            variant='unstyled'
+                            borderRadius='9999px'
+                            p='1rem 2rem'
+                        >
+                            Save
+                        </Button>
+                    </Stack>
+                </Stack>
             </FormControl >
         </Stack >
     )

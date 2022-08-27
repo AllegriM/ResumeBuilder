@@ -15,7 +15,7 @@ function CreateDataCourses( {handleClose, data, section} ) {
 
     return (
         <Stack key='Language' maxW={620} p={5} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' w='100%' align='center' bg='white'>
-            <Heading>{!data ? "Create" : "Edit"} Course</Heading>
+            <Heading>{EMPTY_DATA ? "Create" : "Edit"} Course</Heading>
             <FormControl onSubmit={handleSubmit}>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="title">Course title</FormLabel>
@@ -49,7 +49,7 @@ function CreateDataCourses( {handleClose, data, section} ) {
                 <Stack m={4}>
                     <Textarea value={newData.description} onChange={(e) => handleChangeName(e)} variant='unstyled' bg='gray.200' p={2} type='text' name="description" id='description' placeholder='Describe the course...' />
                 </Stack>
-                <ActionButtons dataContent={EMPTY_DATA} section={section} handleClose={handleClose} handleSubmit={handleSubmit} />
+                <ActionButtons emptyData={EMPTY_DATA} section={section} oldData={data} newData={newData} handleClose={handleClose} handleSubmit={handleSubmit} />
             </FormControl >
         </Stack >
     )

@@ -45,7 +45,7 @@ function CreateDataWorkExperience({handleClose, data, section}) {
                 <Stack m={4}>
                     <Textarea value={newData.description} onChange={(e) => handleChangeName(e)} variant='unstyled' bg='gray.200' p={2} type='text' name="description" id='description' placeholder='Add a description of your work experience' />
                 </Stack>
-                <ActionButtons dataContent={EMPTY_DATA} section={section} data={data} handleClose={handleClose} handleSubmit={handleSubmit} />
+                <ActionButtons emptyData={EMPTY_DATA} section={section} oldData={data} newData={newData} handleClose={handleClose} handleSubmit={handleSubmit} />
             </FormControl >
         </Stack >
     )
