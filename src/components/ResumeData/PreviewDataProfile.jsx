@@ -1,8 +1,12 @@
-import { Heading, Stack, Text } from "@chakra-ui/react"
-import { IconContext } from "react-icons";
-import { FaRegUser } from 'react-icons/fa'
-import { MdOutlineEmail, MdOutlineLocalPhone, MdOutlineLocationOn } from 'react-icons/md'
+import { Heading, Img, Stack, Text } from "@chakra-ui/react"
 import { useSelector } from "react-redux"
+import EmailIcon from '../Icons/EmailIcon'
+import PhoneIcon from '../Icons/PhoneIcon'
+import LocationIcon from '../Icons/LocationIcon'
+import ProfileIcon from '../Icons/ProfileIcon'
+
+
+
 
 function PreviewDataProfile({ setDisplay }) {
 
@@ -12,7 +16,6 @@ function PreviewDataProfile({ setDisplay }) {
     const onEdit = () => {
         setDisplay("Profile")
     }
-
 
     return (
         <Stack
@@ -27,25 +30,29 @@ function PreviewDataProfile({ setDisplay }) {
             color='black'
             justify='space-around'
             cursor='pointer'
-            >
-            <IconContext.Provider value={{size: "1.5em" }}>
-                <Stack p={4} borderRadius='50%' w='120px' h='120px' bg='gray.100' align='center' justify='center'>
-                    <FaRegUser size='3em' />
-                </Stack>
-                <Heading mt={4} as='h4' size='md'>{selector?.fullName ? selector?.fullName : "Your name"}</Heading>
-                <Stack direction='row' align='center'>
-                    <MdOutlineEmail />
-                    <Text>{selector?.email ? selector?.email : "Email"}</Text>
-                </Stack>
-                <Stack direction='row' align='center'>
-                    <MdOutlineLocalPhone />
-                    <Text>{selector?.phone ? selector?.phone : "Phone"}</Text>
-                </Stack>
-                <Stack direction='row' align='center'>
-                    <MdOutlineLocationOn />
-                    <Text>{selector?.city ? selector?.city : "Address"}</Text>
-                </Stack>
-            </IconContext.Provider>
+        >
+            <Stack p={4} borderRadius='50%' w='120px' h='120px' bg='gray.100' align='center' justify='center' overflow='hidden'>
+                {
+                    selector?.image ?
+                        <Img objectFit='cover' src={URL.createObjectURL(selector?.image)} w={120} h='120px' flexShrink={0} maxW='120px' />
+                        :
+                        <ProfileIcon size='4em' />
+                }
+
+            </Stack>
+            <Heading mt={4} as='h4' size='md'>{selector?.fullName ? selector?.fullName : "Your name"}</Heading>
+            <Stack direction='row' align='center'>
+                <EmailIcon />
+                <Text>{selector?.email ? selector?.email : "Email"}</Text>
+            </Stack>
+            <Stack direction='row' align='center'>
+                <PhoneIcon />
+                <Text>{selector?.phone ? selector?.phone : "Phone"}</Text>
+            </Stack>
+            <Stack direction='row' align='center'>
+                <LocationIcon />
+                <Text>{selector?.city ? selector?.city : "Address"}</Text>
+            </Stack>
         </Stack>
     )
 }

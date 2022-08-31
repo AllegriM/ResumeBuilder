@@ -1,9 +1,8 @@
 import { FormControl, FormLabel, Heading, Img, Input, Stack, Button } from "@chakra-ui/react"
 import { useEffect, useReducer, useState } from "react";
-import { MdCameraAlt } from 'react-icons/md'
 import { useDispatch, useSelector } from "react-redux";
 import { createProfileResumeData } from "../../features/resumeData/resumeDataSlice";
-import { IconContext } from "react-icons";
+import CameraIcon from '../Icons/CameraIcon'
 
 function CreateDataProfile({ handleClose }) {
 
@@ -24,6 +23,7 @@ function CreateDataProfile({ handleClose }) {
             image: ""
         }
     );
+
     const handleChangeName = (e) => {
         const { name, value } = e.target;
         setData({ [name]: value })
@@ -37,6 +37,9 @@ function CreateDataProfile({ handleClose }) {
 
     const handleImage = (e) => {
         // console.log(e.target.files[0])
+        const { name } = e.target;
+        const value = e.target.files[0]
+        setData({ [name]: value })
         setImage(e.target.files[0])
     }
 
@@ -52,46 +55,42 @@ function CreateDataProfile({ handleClose }) {
         }
     }, [image])
 
-    console.log(preview)
-
     return (
         <Stack p={5} maxW={620} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' w='100%' align='center' bg='white'>
             <Heading>Edit Profile</Heading>
-            <IconContext.Provider value={{ color:'gray', size:'5em'}}>
                 <FormControl display='flex' minW='200px' w='100%' justifyContent='center' alignItems='center'>
-                    <Input onChange={handleImage} w='100%' h='100%' type='file' id="input-file-upload" display='none' accept="image/png, image/jpg, image/gif, image/jpeg" />
+                    <Input onChange={(e) => handleImage(e)} w='100%' h='100%' type='file' name="image" id="image" display='none' accept="image/png, image/jpg, image/gif, image/jpeg" />
                     {
                         preview ?
-                            <FormLabel display='flex' justifyContent='center' alignItems='center' borderRadius='50%' w='200px' minH='200px' cursor='pointer' overflow='hidden'>
+                            <FormLabel htmlFor="image" display='flex' justifyContent='center' alignItems='center' borderRadius='50%' w='200px' minH='200px' cursor='pointer' overflow='hidden'>
                                 <Img h='200px' w='100%' objectFit='cover' src={preview.image} />
                             </FormLabel>
                             :
-                            <FormLabel htmlFor="input-file-upload" bg='gray.200' borderRadius='50%' w='200px' display='flex' justifyContent='center' alignItems='center' minH='200px' cursor='pointer'>
-                                <MdCameraAlt  />
+                            <FormLabel htmlFor="image" bg='gray.200' borderRadius='50%' w='200px' display='flex' justifyContent='center' alignItems='center' minH='200px' cursor='pointer'>
+                                <CameraIcon  />
                             </FormLabel>
                     }
                 </FormControl>
-            </IconContext.Provider>
             <FormControl onSubmit={handleSubmit}>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="name">Full name</FormLabel>
-                    <Input onChange={(e) => handleChangeName(e)} value={newData.fullName} required variant='unstyled' bg='gray.200' p={2} type='text' name="fullName" id='name' placeholder='Enter your title, first and last name' />
+                    <Input onChange={(e) => handleChangeName(e)}  required variant='unstyled' bg='gray.200' p={2} type='text' name="fullName" id='name' placeholder='Enter your title, first and last name' />
                 </Stack>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="jobTitle">Job Title</FormLabel>
-                    <Input onChange={(e) => handleChangeName(e)} value={newData.jobTitle} required variant='unstyled' bg='gray.200' p={2} type='text' name="jobTitle" id='jobTitle' placeholder='Enter job title' />
+                    <Input  onChange={(e) => handleChangeName(e)} required variant='unstyled' bg='gray.200' p={2} type='text' name="jobTitle" id='jobTitle' placeholder='Enter job title' />
                 </Stack>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="email">Email</FormLabel>
-                    <Input onChange={(e) => handleChangeName(e)} value={newData.email} variant='unstyled' bg='gray.200' p={2} type='email' name="email" id='email' placeholder='Enter email' />
+                    <Input  onChange={(e) => handleChangeName(e)} variant='unstyled' bg='gray.200' p={2} type='email' name="email" id='email' placeholder='Enter email' />
                 </Stack>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="phone">Phone</FormLabel>
-                    <Input onChange={(e) => handleChangeName(e)} value={newData.phone} variant='unstyled' bg='gray.200' p={2} type='phone' name="phone" id='phone' placeholder='Enter phone' />
+                    <Input  onChange={(e) => handleChangeName(e)} variant='unstyled' bg='gray.200' p={2} type='phone' name="phone" id='phone' placeholder='Enter phone' />
                 </Stack>
                 <Stack m={4}>
                     <FormLabel mb={0} htmlFor="city">City</FormLabel>
-                    <Input onChange={(e) => handleChangeName(e)} value={newData.city} variant='unstyled' bg='gray.200' p={2} type='phone' name="city" id='city' placeholder='Enter city, country' />
+                    <Input onChange={(e) => handleChangeName(e)} variant='unstyled' bg='gray.200' p={2} type='phone' name="city" id='city' placeholder='Enter city, country' />
                 </Stack>
                 <Stack direction='row' mt={7} justify='flex-end'>
                     <Stack direction='row' gap={5}>

@@ -6,7 +6,7 @@ function FullResumeData({ handleOption, setDataToEdit, setSectionId }) {
     return (
         <Stack maxW={620} w='100%' gap={3}>
             <PreviewDataProfile setDisplay={handleOption} />
-            <PreviewDataGroupAccordion setDataToEdit={setDataToEdit} setSectionId={setSectionId} />
+            <PreviewDataGroupAccordion setDataToEdit={setDataToEdit} setSectionId={setSectionId} handleOption={handleOption} />
         </Stack>
     )
 }
