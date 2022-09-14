@@ -1,37 +1,24 @@
 
 import { Stack } from '@chakra-ui/react'
-import { useRef } from 'react'
-import Header from './components/Header'
-import NavBar from './components/NavBar'
-import PDFPreview from './components/PDFPreview'
-import ResumeData from './pages/ResumeData'
-import { useReactToPrint } from "react-to-print";
+import { Route, Routes } from 'react-router-dom'
+import Home from './pages/Home';
+import Login from './pages/Login';
 
 function App() {
 
-  const componentRef = useRef();
-
-  const handlePrint = useReactToPrint({
-      content: () => componentRef.current,
-      documentTitle: 'MyResume',
-  })
 
   return (
     <Stack
-      minH='100vh'
-      bg='rgb(243 244 246)'
-      px={[0, 0, 8, 20]}
-      direction='row'
-      h='100%'
-      >
-        <Stack direction={['']} w='100%' py={[0, 0, 10]}>
-          <NavBar handlePrint={handlePrint} />
-          <Stack direction={['column']} w='100%' px={[0, 0, 5]} align='center'>
-            <Header handlePrint={handlePrint} />
-            <ResumeData />
-          </Stack>
-        </Stack>
-        <PDFPreview componentRef={componentRef} />
+    minH='100vh'
+    bg='rgb(243 244 246)'
+    px={[0, 0, 8, 20]}
+    direction='row'
+    h='100%'
+    >
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </Stack>
   )
 }

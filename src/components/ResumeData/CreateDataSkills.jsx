@@ -8,8 +8,8 @@ function CreateDataSkills({ handleClose, data, section }) {
 
     const EMPTY_DATA = Object.values(data).every(item => item === "")
     const dispatch = useDispatch()
-    const selector = useSelector(state => state.resumeData.Skill)
-
+    const selector = useSelector(state => state.resumeData.Skills)
+    console.log(selector)
     const { handleSubmit, handleChangeName, newData } = useSaveDataInfo({ selector, dispatch, handleClose, createSectionResumeData, data, section })
 
     return (
@@ -33,7 +33,7 @@ function CreateDataSkills({ handleClose, data, section }) {
                         <option value='Experienced'>Experienced</option>
                         <option value='Expert'>Expert</option>
                     </Select>
-                </Stack>   
+                </Stack>
                 <ActionButtons emptyData={EMPTY_DATA} section={section} oldData={data} newData={newData} handleClose={handleClose} handleSubmit={handleSubmit} />
             </FormControl >
         </Stack >

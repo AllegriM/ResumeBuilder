@@ -4,14 +4,14 @@ import { createSectionResumeData } from "../../features/resumeData/resumeDataSli
 import { useSaveDataInfo } from "../../hooks/useSaveInfo";
 import ActionButtons from "../UI Components/ActionButtons";
 
-function CreateDataCourses( {handleClose, data, section} ) {
-    
+function CreateDataCourses({ handleClose, data, section }) {
+
     const EMPTY_DATA = Object.values(data).every(item => item === "")
 
     const dispatch = useDispatch()
-    const selector = useSelector(state => state.resumeData.Courses)
+    const selector = useSelector(state => state.resumeData.Course)
 
-    const {handleSubmit, handleChangeName, newData } = useSaveDataInfo({selector, dispatch, handleClose, createSectionResumeData, data, section})
+    const { handleSubmit, handleChangeName, newData } = useSaveDataInfo({ selector, dispatch, handleClose, createSectionResumeData, data, section })
 
     return (
         <Stack key='Language' maxW={620} p={5} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' w='100%' align='center' bg='white'>

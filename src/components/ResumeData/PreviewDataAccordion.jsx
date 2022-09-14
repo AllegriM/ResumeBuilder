@@ -7,9 +7,8 @@ export const DATE_OPTIONS = {
 }
 
 
-function PreviewDataAccordion({ title, data, setDataToEdit, setSectionId ,sectionId ,handleOption}) {
+function PreviewDataAccordion({ title, data, setDataToEdit, setSectionId, sectionId, handleOption }) {
 
-    console.log(sectionId)
     const handleEditAction = (item) => {
         setDataToEdit(item)
         setSectionId(title)
@@ -17,12 +16,14 @@ function PreviewDataAccordion({ title, data, setDataToEdit, setSectionId ,sectio
 
     const handleCreateOption = () => {
         handleOption(sectionId)
-        setDataToEdit({title: "", description: "", 
-        image: "", city: "", 
-        country: "", info: "", 
-        startDate: "", endDate:""})
+        setDataToEdit({
+            title: "", description: "",
+            image: "", city: "",
+            country: "", info: "",
+            startDate: "", endDate: ""
+        })
         // onClose()
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
     }
 
     return (
@@ -37,15 +38,13 @@ function PreviewDataAccordion({ title, data, setDataToEdit, setSectionId ,sectio
                 {
                     data.length === 0 ? null :
                         data.map(item => {
+                            console.log(item)
                             const formatStartDate = new Date(item.startDate)
                             const formatEndDate = new Date(item.endDate)
-                            console.log()
-                            // const newStartDate = `${formatStartDate.getMonth()} ${formatStartDate.getYear()} `
-                            // console.log(newStartDate)
                             return (
-                                <AccordionPanel key={item.id} p='.5rem 1.5rem' bg='white' minH='48px' display='flex' flexDirection='column' align='center' mt={2} onClick={() => handleEditAction(item)} cursor='pointer'>
+                                <AccordionPanel key={item.id} p='.5rem 1.5rem' bg='white' minH='48px' display='flex' flexDirection='column' justifyContent='center' mt={2} onClick={() => handleEditAction(item)} cursor='pointer'>
                                     <Stack direction='row' align='center'>
-                                        <Text fontWeight={700}>{item.title && item.info ? `${item.title},` : null}</Text>
+                                        <Text fontWeight={700}>{item.title && item.info ? `${item.title},` : item.title}</Text>
                                         <Text>{item.info ? item.info : null}</Text>
                                     </Stack>
                                     {

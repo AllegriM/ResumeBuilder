@@ -9,6 +9,7 @@ function PDFPreview({ componentRef }) {
 
     const selector = useSelector(state => state.resumeData)
     console.log(selector)
+
     return (
         <Stack w='100%' minH='880px' display={['none', 'none', 'none', 'none', 'block']} py={[0, 0, 10]} >
             <Stack maxW='21cm' h='100%' w='100%' align='flex-start' bg='white' p={5} gap={6} ref={componentRef} >
@@ -38,7 +39,7 @@ function PDFPreview({ componentRef }) {
                             <Heading fontSize='xl' fontWeight='500'>{selector.Profile.jobTitle}</Heading>
                         </Stack>
                         {
-                            selector.Profile.image ?
+                            selector.Profile.image !== {} ?
                                 <Img objectFit='cover' src={URL.createObjectURL(selector.Profile.image)} w={120} borderRadius='50%' h='120px' flexShrink={0} maxW='120px' />
                                 : null
                         }
@@ -119,7 +120,13 @@ function PDFPreview({ componentRef }) {
                                                 </Stack>
                                                 <Text fontStyle='italic' fontSize={14}>{formatStartDate.toLocaleDateString("en-US", DATE_OPTIONS)} - {formatEndDate.toLocaleDateString("en-US", DATE_OPTIONS)}</Text>
                                             </Stack>
-                                            <Text>{item.city}, {item.country}</Text>
+                                            <Text>
+                                                {item.city && item.country ? `${item.city}, ${item.country}` :
+                                                    item.city ? `${item.city}` :
+                                                        item.country ? `${item.country}`
+                                                            : null
+                                                }
+                                            </Text>
                                             <Text>{item.description}</Text>
                                         </Stack>
                                     )
@@ -134,22 +141,22 @@ function PDFPreview({ componentRef }) {
                             <Stack borderTop='1px solid' borderBottom='1px solid' py={.5}>
                                 <Heading fontSize='xl' w='100%' textAlign='center'>Language</Heading>
                             </Stack>
-                            {
-                                selector.Language.map((item) => {
-                                    return (
-                                        <Stack direction='row' key={item.id} align='center' gap={2}>
-                                            <Stack direction='row' align='center'>
+                            <UnorderedList display='grid' gridTemplateColumns='repeat(3, minmax(100px, 1fr))' w='100%' >
+                                {
+                                    selector.Language.map((item) => {
+                                        return (
+                                            <ListItem key={item.id} mx={5} my={2} display='flex' alignItems='center' gap={2}>
                                                 <Heading fontSize='md' fontWeight={500}>{item.title}</Heading>
                                                 {
                                                     item.info ? <Text fontStyle='italic' fontSize={16} pt={.5}>{item.info}</Text>
                                                         : null
                                                 }
                                                 <Text pt={.5} fontSize={14}>{item.subinfo ? `(${item.subinfo})` : null}</Text>
-                                            </Stack>
-                                        </Stack>
-                                    )
-                                })
-                            }
+                                            </ListItem>
+                                        )
+                                    })
+                                }
+                            </UnorderedList>
                         </Stack>
                 }
                 {

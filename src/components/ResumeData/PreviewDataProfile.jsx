@@ -11,7 +11,7 @@ import ProfileIcon from '../Icons/ProfileIcon'
 function PreviewDataProfile({ setDisplay }) {
 
     const selector = useSelector(state => state.resumeData.Profile)
-
+    console.log(selector)
 
     const onEdit = () => {
         setDisplay("Profile")
