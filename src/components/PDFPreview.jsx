@@ -1,4 +1,4 @@
-import { Stack, Img, Heading, Text, UnorderedList, ListItem } from "@chakra-ui/react"
+import { Stack, Heading, Text, UnorderedList, ListItem } from "@chakra-ui/react"
 import { useSelector } from "react-redux";
 import { DATE_OPTIONS } from "./ResumeData/PreviewDataAccordion";
 import EmailIcon from './Icons/EmailIcon'
@@ -8,7 +8,6 @@ import PhoneIcon from './Icons/PhoneIcon'
 function PDFPreview({ componentRef }) {
 
     const selector = useSelector(state => state.resumeData)
-    console.log(selector)
 
     return (
         <Stack w='100%' minH='880px' display={['none', 'none', 'none', 'none', 'block']} py={[0, 0, 10]} >
@@ -38,11 +37,11 @@ function PDFPreview({ componentRef }) {
                             <Heading fontSize='3xl' fontWeight='800'>{selector.Profile.fullName}</Heading>
                             <Heading fontSize='xl' fontWeight='500'>{selector.Profile.jobTitle}</Heading>
                         </Stack>
-                        {
-                            selector.Profile.image !== {} ?
+                        {/* {
+                                selector.Profile.image ?
                                 <Img objectFit='cover' src={URL.createObjectURL(selector.Profile.image)} w={120} borderRadius='50%' h='120px' flexShrink={0} maxW='120px' />
                                 : null
-                        }
+                        } */}
                     </Stack>
                 </Stack>
                 {

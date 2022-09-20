@@ -1,15 +1,15 @@
 import { FormControl, FormLabel, Heading, Img, Input, Stack, Button } from "@chakra-ui/react"
 import { useEffect, useReducer, useState } from "react";
 import { useDispatch } from "react-redux";
-import { createProfileResumeData } from "../../features/resumeData/resumeDataSlice";
+import { createProfileResumeData, updateProfileImage } from "../../features/resumeData/resumeDataSlice";
 import CameraIcon from '../Icons/CameraIcon'
 
 function CreateDataProfile({ handleClose }) {
 
     const dispatch = useDispatch()
 
-    const [image, setImage] = useState(null)
     const [preview, setPreview] = useState(null)
+    const [image, setImage] = useState(null)
 
     const [newData, setData] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
@@ -23,28 +23,38 @@ function CreateDataProfile({ handleClose }) {
         }
     );
 
-    const saveToLocalStorageArrayProfile = (section, newData) => {
-        const data = JSON.parse(localStorage.getItem(section)) || {};
-        console.log(data)
-        localStorage.setItem(section, JSON.stringify(newData));
+    const saveProfileImageLocalStorage = () => {
+        localStorage.setItem('image', preview)
+        // const reader = new FileReader();
+        // reader.onloadend = () => {
+        //     localStorage.setItem('image', reader.result)
+        // }
+        // reader.readAsDataURL(image.image);
+    }
+
+    const saveToLocalStorageArrayProfile = (section) => {
+        const data = JSON.parse(localStorage.getItem(section)) || [];
+        localStorage.setItem(section, JSON.stringify({ ...data, ...newData }));
     }
 
     const handleChangeName = (e) => {
         const { name, value } = e.target;
-        setData({ [name]: value })
-    }
-
-
-    const handleImage = (e) => {
-        const file = e.target.files[0];
-        e.target.files.length !== 0 ? setImage(file) : setImage(null)
-        setData({ image: file })
-        setPreview(URL.createObjectURL(file))
+        // if type is file, convert to base64 and save to local storage
+        if (name === "image") {
+            // from file to canvas to save local storage
+            const file = e.target.files[0];
+            setImage({ [name]: file });
+            setPreview(file)
+        } else {
+            setData({ [name]: value });
+        }
     }
 
     const handleSubmit = () => {
-        saveToLocalStorageArrayProfile("Profile", newData)
         dispatch(createProfileResumeData(newData))
+        dispatch(updateProfileImage(image))
+        saveToLocalStorageArrayProfile("Profile")
+        saveProfileImageLocalStorage("ProfileImage")
         handleClose()
     }
 
@@ -52,24 +62,23 @@ function CreateDataProfile({ handleClose }) {
         if (image) {
             const reader = new FileReader()
             reader.onloadend = (e) => {
-                setPreview({ image: e.target.result })
+                setPreview(e.target.result)
             }
-            reader.readAsDataURL(image)
-            saveToLocalStorageArrayProfile("Profile", newData)
+            reader.readAsDataURL(image.image)
         } else {
             setPreview(null)
         }
-    }, [image, newData])
+    }, [image])
 
     return (
         <Stack p={5} maxW={620} boxShadow='rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' w='100%' align='center' bg='white'>
             <Heading>Edit Profile</Heading>
             <FormControl display='flex' minW='200px' w='100%' justifyContent='center' alignItems='center'>
-                <Input onChange={(e) => handleImage(e)} w='100%' h='100%' type='file' name="image" id="image" display='none' accept="image/png, image/jpg, image/gif, image/jpeg" />
+                <Input onChange={(e) => handleChangeName(e)} w='100%' h='100%' type='file' name="image" id="image" display='none' accept="image/*" />
                 {
                     preview ?
                         <FormLabel htmlFor="image" display='flex' justifyContent='center' alignItems='center' borderRadius='50%' w='200px' minH='200px' cursor='pointer' overflow='hidden'>
-                            <Img h='200px' w='100%' objectFit='cover' src={preview.image} />
+                            <Img h='200px' w='100%' objectFit='cover' src={preview} />
                         </FormLabel>
                         :
                         <FormLabel htmlFor="image" bg='gray.200' borderRadius='50%' w='200px' display='flex' justifyContent='center' alignItems='center' minH='200px' cursor='pointer'>

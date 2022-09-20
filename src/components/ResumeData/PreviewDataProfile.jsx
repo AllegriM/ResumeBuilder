@@ -11,7 +11,10 @@ import ProfileIcon from '../Icons/ProfileIcon'
 function PreviewDataProfile({ setDisplay }) {
 
     const selector = useSelector(state => state.resumeData.Profile)
-    console.log(selector)
+    const imageSelector = useSelector(state => state.resumeData.ProfileImage)
+
+    // eslint-disable-next-line no-unused-vars
+    // const [source, setSource] = useState(() => localStorage.getItem('image') || null)
 
     const onEdit = () => {
         setDisplay("Profile")
@@ -33,12 +36,12 @@ function PreviewDataProfile({ setDisplay }) {
         >
             <Stack p={4} borderRadius='50%' w='120px' h='120px' bg='gray.100' align='center' justify='center' overflow='hidden'>
                 {
-                    selector?.image ?
-                        <Img objectFit='cover' src={URL.createObjectURL(selector?.image)} w={120} h='120px' flexShrink={0} maxW='120px' />
+                    imageSelector ?
+                        // if image is type file read as data url}
+                        <Img objectFit='cover' src={imageSelector} w={120} h='120px' flexShrink={0} maxW='120px' />
                         :
                         <ProfileIcon size='4em' />
                 }
-
             </Stack>
             <Heading mt={4} as='h4' size='md'>{selector?.fullName ? selector?.fullName : "Your name"}</Heading>
             <Stack direction='row' align='center'>

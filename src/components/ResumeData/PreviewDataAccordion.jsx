@@ -8,7 +8,6 @@ export const DATE_OPTIONS = {
 
 
 function PreviewDataAccordion({ title, data, setDataToEdit, setSectionId, sectionId, handleOption }) {
-
     const handleEditAction = (item) => {
         setDataToEdit(item)
         setSectionId(title)
@@ -38,7 +37,6 @@ function PreviewDataAccordion({ title, data, setDataToEdit, setSectionId, sectio
                 {
                     data.length === 0 ? null :
                         data.map(item => {
-                            console.log(item)
                             const formatStartDate = new Date(item.startDate)
                             const formatEndDate = new Date(item.endDate)
                             return (

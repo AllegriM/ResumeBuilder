@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState =
 {
+    "ProfileImage": localStorage.getItem('image') ?? null,
     "Profile": localStorage.getItem('Profile') ? JSON.parse(localStorage.getItem('Profile')) : {},
     "Education": localStorage.getItem('Education') ? JSON.parse(localStorage.getItem('Education')) : [],
     "WorkExperience": localStorage.getItem('WorkExperience') ? JSON.parse(localStorage.getItem('WorkExperience')) : [],
@@ -18,6 +19,9 @@ export const resumeDataSlice = createSlice({
     name: 'resumeData',
     initialState,
     reducers: {
+        updateProfileImage: (state, action) => {
+            state.ProfileImage = action.payload
+        },
         createProfileResumeData: (state, action) => {
             Object.assign(state.Profile, action.payload)
         },
@@ -30,7 +34,6 @@ export const resumeDataSlice = createSlice({
             const { section, newData, oldData } = action.payload
             const seccion = state[section]
             const dataIndex = seccion.findIndex(item => item.id === oldData.id)
-            console.log({ oldData, newData, id: dataIndex })
             Object.assign(seccion[dataIndex], ({ ...newData, id: oldData.id }))
         },
         deleteSectionResumeData: (state, action) => {
@@ -42,6 +45,6 @@ export const resumeDataSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { createProfileResumeData, createSectionResumeData, deleteSectionResumeData, updateSectionResumeData } = resumeDataSlice.actions
+export const { createProfileResumeData, createSectionResumeData, deleteSectionResumeData, updateSectionResumeData, updateProfileImage } = resumeDataSlice.actions
 
 export default resumeDataSlice.reducer
